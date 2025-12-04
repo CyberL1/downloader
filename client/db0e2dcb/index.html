@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html xmlns:fb="https://ogp.me/ns/fb#" lang="en">
+  <head>
+    <title>Guilded - Chat for Gaming Communities</title>
+    <meta
+      id="viewport"
+      name="viewport"
+      charset="utf-8"
+      content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <meta
+      name="keywords"
+      content="Guilded,Chat,Chat bots,Servers,LFG,LFM,Overwatch,CSGO,Fortnite,FFXIV,esports"
+    />
+    <meta
+      name="description"
+      content="Guilded upgrades your group chat and equips your server with integrated event calendars, forums, and more – 100% free."
+    />
+    <meta name="msvalidate.01" content="BCC950552301977E98B72E91C51606B2" />
+    <meta name="apple-itunes-app" content="app-id=1112038925" />
+
+    <meta name="robots" content="max-image-preview:large" />
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Official Guilded Blog Feed"
+      href="/rss.xml"
+    />
+
+    <!-- favicons -->
+    <link rel="icon" type="image/png" href="/asset/Favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/asset/Favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/asset/Favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/asset/Favicons/favicon-128x128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/asset/Favicons/favicon-196x196.png" sizes="196x196" />
+
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="57x57"
+      href="/asset/Favicons/apple-touch-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="114x114"
+      href="/asset/Favicons/apple-touch-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="72x72"
+      href="/asset/Favicons/apple-touch-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="144x144"
+      href="/asset/Favicons/apple-touch-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="60x60"
+      href="/asset/Favicons/apple-touch-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="120x120"
+      href="/asset/Favicons/apple-touch-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="76x76"
+      href="/asset/Favicons/apple-touch-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="152x152"
+      href="/asset/Favicons/apple-touch-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="180x180"
+      href="/asset/Favicons/apple-touch-icon.png"
+    />
+
+    <meta name="msapplication-TileColor" content="#f5c400" />
+    <meta name="msapplication-TileImage" content="/asset/Icons/ms-icon-144x144.png?v=3" />
+    <meta name="msapplication-config" content="/asset/Favicons/browserconfig.xml" />
+
+    <link rel="manifest" href="/asset/Icons/manifest.json?v=6" />
+
+    <!-- OG tags -->
+    <meta property="og:image" content="https://www.guilded.gg/asset/OpenGraph/GuildedLarge.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      property="og:description"
+      content="Guilded upgrades your group chat and equips your server with integrated event calendars, forums, and more – 100% free."
+    />
+    <meta property="og:site_name" content="Guilded - Chat for Gaming Communities" />
+    <meta property="og:type" content="website" />
+
+    <!-- important, keep this in sync with script tags below and webpack-prod config -->
+    <!-- https://w3c.github.io/preload/#as-attribute for `as` types -->
+    <link rel="preload" as="image" href="/asset/Loader/LogoAnimation_2.webp" />
+    <link rel="preload" href="/db0e2dcb/bundle.js" as="script" />
+    <link rel="preload" href="/db0e2dcb/StockReactions.js" as="script" />
+    <link rel="preload" href="/db0e2dcb/SVGIcons.js" as="script" />
+
+    <!-- crossorigin is needed for any assets loaded in anonymous mode -->
+    <link rel="preload" href="/fonts/BuilderSans-Light.woff2" as="font" crossorigin />
+    <link rel="preload" href="/fonts/BuilderSans-Regular.woff2" as="font" crossorigin />
+    <link rel="preload" href="/fonts/BuilderSans-Bold.woff2" as="font" crossorigin />
+    <link rel="preload" href="/fonts/BuilderSans-ExtraBold.woff2" as="font" crossorigin />
+    <link rel="preload" href="/fonts/BuilderMono-Regular.woff2" as="font" crossorigin />
+
+    <script>
+      // Fixes an issue in 105+ where an added event handler changes slate-react behavior
+      delete HTMLElement.prototype.onbeforeinput;
+    </script>
+
+    <script>
+      console.log('%cStop!', 'color: red; font-size: 32px; font-weight: bold');
+      console.log(
+        '%cThis is a browser feature intended for developers.  If someone told you to do something here, it is a scam and will give them access to your Guilded data. Please do not dox yourself!',
+        'font-size: 14px'
+      );
+    </script>
+  </head>
+
+  <body>
+    <div id="svg-icons"></div>
+    <div id="app">
+      <style>
+        body {
+          text-align: center;
+          font-family: 'Builder Sans', Helvetica, Arial, sans-serif;
+          color: #eeeff0;
+          background: #373943;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        p {
+          display: block;
+          font-size: 16px;
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        h1 {
+          font-size: 22px;
+          line-height: 28px;
+          color: white;
+          font-weight: bold;
+        }
+
+        h2 {
+          font-size: 15px;
+          line-height: 22px;
+        }
+
+        .app-download-link {
+          color: #ececee;
+          display: inline-block;
+          width: 160px;
+          border-radius: 4px;
+          border: solid 1px #dedede;
+          font-weight: bold;
+          font-size: 15px;
+          padding: 15px;
+          margin-top: 20px;
+        }
+
+        .app-download-link:hover {
+          border-color: #f5c400;
+        }
+
+        .app-download-link:nth-child(2n) {
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+
+        .app-download-link img {
+          vertical-align: bottom;
+        }
+
+        .fallback-hero-image {
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 54px;
+          margin-bottom: 24px;
+          display: block;
+          width: 40vw;
+          height: auto;
+          min-width: 280px;
+          padding-left: 16px;
+        }
+
+        @media (max-width: 420px) {
+          .app-download-link {
+            width: 132px;
+          }
+
+          .app-download-link:nth-child(2n) {
+            margin-right: 0;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .app-download-link {
+            width: 120px;
+          }
+        }
+
+        #fallback,
+        #no-js-message {
+          display: none;
+        }
+      </style>
+      <div style="width: 100%; height: 100%;">
+        <div id="loading">
+          <img id="app-loader-static-image" />
+          <img id="app-loader-animated-image" src="/asset/Loader/LogoAnimation_2.webp" />
+        </div>
+        <div id="fallback" width="100%" height="100%" style="margin-top: 9vh;">
+          <div id="no-js-message">
+            <h1>
+              Guilded requires JavaScript
+            </h1>
+            <h2>
+              Please enable JavaScript to continue.
+            </h2>
+          </div>
+          <div id="unsupported-browser-message">
+            <h1>
+              Get the Guilded app
+            </h1>
+          </div>
+          <picture>
+            <source srcset="/asset/App/desktop-app.svg" type="image/svg" />
+            <source
+              srcset="
+                /asset/App/desktop-app.png     418w,
+                /asset/App/desktop-app@2x.png  838w,
+                /asset/App/desktop-app@3x.png 1257w
+              "
+              type="image/png"
+            />
+            <img
+              width="420"
+              height="290"
+              src="/asset/App/desktop-app@2x.png"
+              class="fallback-hero-image"
+              loading="lazy"
+            />
+          </picture>
+          <p>For the best experience, download our desktop or mobile app</p>
+          <div class="app-download-links">
+            <a
+              href="https://www.guilded.gg/downloads/Guilded-Mac.dmg"
+              class="app-download-link"
+              data-link-id="macos"
+            >
+              <img
+                height="20"
+                width="20"
+                src="/asset/Emails/AppleIconSmall.png"
+                loading="lazy"
+              />&nbsp; MacOS
+            </a>
+            <a
+              href="https://www.guilded.gg/downloads/Guilded-Win.exe"
+              class="app-download-link"
+              data-link-id="windows"
+            >
+              <img
+                height="20"
+                width="20"
+                src="/asset/Emails/WindowsIcon.png"
+                loading="lazy"
+              />&nbsp; Windows
+            </a>
+            <a
+              href="https://itunes.apple.com/us/app/guilded.gg/id1112038925?mt=8"
+              class="app-download-link"
+              data-link-id="ios"
+            >
+              <img
+                height="20"
+                width="20"
+                src="/asset/Emails/AppleIconSmall.png"
+                loading="lazy"
+              />&nbsp; App Store
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.gg.guilded"
+              class="app-download-link"
+              data-link-id="android"
+            >
+              <img
+                height="20"
+                width="20"
+                src="/asset/Emails/PlayStoreIconSmall.png"
+                loading="lazy"
+              />&nbsp; Play Store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- zero-width space -->
+    <div id="font-dummy-1" class="font-dummy">&#xfeff;</div>
+    <div id="font-dummy-2" class="font-dummy">&#xfeff;</div>
+    <div id="font-dummy-3" class="font-dummy">&#xfeff;</div>
+    <div id="font-dummy-4" class="font-dummy">&#xfeff;</div>
+    <div id="font-dummy-5" class="font-dummy">&#xfeff;</div>
+    <div id="font-dummy-6" class="font-dummy">&#xfeff;</div>
+
+    <style>
+      body {
+        font-family: 'Builder Sans', Arial, sans-serif;
+        background-color: #1e2025;
+      }
+
+      @font-face {
+        font-family: 'Builder Sans';
+        src: url('/fonts/BuilderSans-Light.woff2') format('woff2'),
+          url('/fonts/BuilderSans-Light.woff') format('woff');
+        font-weight: 300; /* light */
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Builder Sans';
+        src: url('/fonts/BuilderSans-Regular.woff2') format('woff2'),
+          url('/fonts/BuilderSans-Regular.woff') format('woff');
+        font-weight: 400; /* normal */
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Builder Sans';
+        src: url('/fonts/BuilderSans-Bold.woff2') format('woff2'),
+          url('/fonts/BuilderSans-Bold.woff') format('woff');
+        font-weight: 700; /* bold */
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Builder Sans Black';
+        src: url('/fonts/BuilderSans-ExtraBold.woff2') format('woff2'),
+          url('/fonts/BuilderSans-ExtraBold.woff') format('woff');
+        font-weight: 900; /* extra bold */
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Builder Mono';
+        src: url('/fonts/BuilderMono-Regular.woff2') format('woff2'),
+          url('/fonts/BuilderMono-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: monospace;
+        font-display: swap;
+      }
+
+      #font-dummy-1 {
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      #font-dummy-2 {
+        font-weight: bold;
+        font-style: normal;
+      }
+
+      #font-dummy-3 {
+        font-weight: normal;
+        font-style: italic;
+      }
+
+      #font-dummy-4 {
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      .font-dummy {
+        opacity: 0;
+        max-width: 0px;
+        max-height: 0px;
+        overflow: hidden;
+        visibility: hidden;
+        position: absolute;
+      }
+
+      #loading {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin-top: calc(50vh - 35px);
+      }
+
+      #app-loader-animated-image {
+        position: absolute;
+        display: none;
+        max-height: 90px;
+      }
+
+      #app-loader-static-image {
+        position: absolute;
+        max-height: 90px;
+        content: url('data:image/png;base64,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');
+      }
+    </style>
+    <script>
+      window.IS_PREPROD = false;
+      window.LOAD_MS = window.performance && window.performance.now();
+    </script>
+    <noscript>
+      <style>
+        #loading {
+          display: none;
+        }
+
+        #fallback,
+        #no-js-message {
+          display: block;
+        }
+
+        #unsupported-browser-message {
+          display: none;
+        }
+      </style>
+    </noscript>
+    <!-- important, keep this in sync with preloading above and webpack-prod config -->
+    <script type="text/javascript" id="bundle" src="/db0e2dcb/bundle.js" charset="utf-8" async></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://www.guilded.gg",
+        "logo": "https://www.guilded.gg/asset/Icons/new_logo_large.png",
+        "name": "Guilded - Chat for Gaming Communities",
+        "description": "Guilded upgrades your group chat and equips your server with integrated event calendars, forums, and more – 100% free.",
+        "sameAs": [
+          "https://twitter.com/teamguilded",
+          "https://www.facebook.com/Guilded.gg",
+          "https://www.instagram.com/teamguilded/",
+          "https://www.reddit.com/r/guilded"
+        ]
+      }
+    </script>
+    <script>
+      var loaderImage = document.getElementById('app-loader-animated-image');
+      loaderImage.onload = function() {
+        // use new ref in case bundle already loaded (which removes this image and the loaderImage ref)
+        const loaderImg = document.getElementById('app-loader-animated-image');
+        const staticImg = document.getElementById('app-loader-static-image');
+        if (loaderImg) {
+          loaderImg.style.display = 'block';
+        }
+        if (staticImg) {
+          staticImg.style.display = 'none';
+        }
+      };
+
+      var bundle = document.getElementById('bundle');
+      bundle.onload = function() {
+        var unsupportedMessage = document.getElementById('fallback');
+        if (unsupportedMessage) {
+          unsupportedMessage.style.display = 'block';
+          document.querySelector('#loading').style.display = 'none';
+
+          var buttonsToRemove = ['macos', 'ios', 'windows', 'android'];
+          var userAgentIdentified = false;
+
+          if (navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i)) {
+            buttonsToRemove.splice(buttonsToRemove.indexOf('ios'), 1);
+            userAgentIdentified = true;
+          }
+          if (navigator.platform.indexOf('Win') > -1) {
+            buttonsToRemove.splice(buttonsToRemove.indexOf('windows'), 1);
+            userAgentIdentified = true;
+          }
+          if (navigator.userAgent.match(/Android/i)) {
+            buttonsToRemove.splice(buttonsToRemove.indexOf('android'), 1);
+            userAgentIdentified = true;
+          }
+          if (navigator.platform.indexOf('Mac') > -1) {
+            buttonsToRemove.splice(buttonsToRemove.indexOf('macos'), 1);
+            userAgentIdentified = true;
+          }
+
+          if (userAgentIdentified) {
+            for (var index in buttonsToRemove) {
+              var buttonType = buttonsToRemove[index];
+              var button = document.querySelector(
+                '.app-download-link[data-link-id="' + buttonType + '"]'
+              );
+              button.style.display = 'none';
+            }
+          }
+        }
+
+        loaderImage = null;
+      };
+    </script>
+  </body>
+</html>
