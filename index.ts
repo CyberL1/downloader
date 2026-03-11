@@ -13,18 +13,18 @@ import { promisify } from "util";
 const streamPipeline = promisify(pipeline);
 
 async function downloadFile(url: string, filePath: string) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    console.error(`Failed to download ${url}: ${response.statusText}`);
-    return;
-  }
-
   if (!existsSync(dirname(filePath))) {
     mkdirSync(dirname(filePath), { recursive: true });
   }
 
   if (existsSync(filePath)) {
     console.warn(filePath, "already exists, skipping");
+    return;
+  }
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error(`Failed to download ${url}: ${response.statusText}`);
     return;
   }
 
@@ -91,13 +91,12 @@ for (const match of scriptAssets) {
 }
 
 const allScripts = readdirSync(join(clientDir, BUNDLE_ID));
-
 const allScriptsContents: string[] = [];
-allScripts.map((s) =>
-  allScriptsContents.push(
-    readFileSync(join(clientDir, BUNDLE_ID, s)).toString(),
-  ),
-);
+
+for (const script of allScripts) {
+  const content = readFileSync(join(clientDir, BUNDLE_ID, script), "utf8");
+  allScriptsContents.push(content);
+}
 
 const otherAssets = allScriptsContents
   .flatMap((c) => {
