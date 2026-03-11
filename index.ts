@@ -79,10 +79,19 @@ await downloadFile(
 );
 
 const scriptsBlock = bundleText.match(/\{return o.p\+""\+\(\{.+?\}/)?.[0];
-const scriptAssets = scriptsBlock!.matchAll(/\b(?<key>\d+):"(?<asset>[^"]+)"/g);
+
+if (!scriptsBlock) {
+  throw new Error("Could not locate scripts block");
+}
+
+const scriptAssets = scriptsBlock.matchAll(/\b(?<key>\d+):"(?<asset>[^"]+)"/g);
 
 for (const match of scriptAssets) {
-  const asset = match.groups!.asset;
+  if (!match.groups) {
+    throw new Error("no math groups for some reason");
+  }
+
+  const asset = match.groups.asset;
 
   await downloadFile(
     `https://www.guilded.gg${BUNDLE_ID}/${asset}.js`,
