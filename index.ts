@@ -88,7 +88,7 @@ const scriptAssets = scriptsBlock.matchAll(/\b(?<key>\d+):"(?<asset>[^"]+)"/g);
 
 for (const match of scriptAssets) {
   if (!match.groups) {
-    throw new Error("no math groups for some reason");
+    throw new Error("no match groups for some reason");
   }
 
   const asset = match.groups.asset;
