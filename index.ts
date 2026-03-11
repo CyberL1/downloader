@@ -56,7 +56,7 @@ if (!existsSync("CURRENT_BUNDLE_ID.txt")) {
 const CURRENT_BUNDLE_ID = readFileSync("CURRENT_BUNDLE_ID.txt").toString();
 
 if (BUNDLE_ID === CURRENT_BUNDLE_ID) {
-  console.error("BUNDLE_ID is indentical to CURRENT_BUNDLE_ID, exiting");
+  console.error("BUNDLE_ID is identical to CURRENT_BUNDLE_ID, exiting");
   process.exit(1);
 }
 
@@ -111,7 +111,7 @@ const otherAssets = allScriptsContents
 
 for (const asset of otherAssets) {
   const assetPath = join(clientDir, asset);
-  mkdirSync(dirname(assetPath), { recursive: true });
+
   if (!asset.endsWith("/")) {
     await downloadFile(`https://www.guilded.gg${asset}`, assetPath);
   }
@@ -130,7 +130,7 @@ const fonts = allScriptsContents
 
 for (const asset of fonts) {
   const assetPath = join(clientDir, asset);
-  mkdirSync(dirname(assetPath), { recursive: true });
+
   if (!asset.endsWith("/")) {
     await downloadFile(`https://www.guilded.gg${asset}`, assetPath);
   }
