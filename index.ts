@@ -13,13 +13,13 @@ import { promisify } from "util";
 const streamPipeline = promisify(pipeline);
 
 async function downloadFile(url: string, filePath: string) {
-  if (!existsSync(dirname(filePath))) {
-    mkdirSync(dirname(filePath), { recursive: true });
-  }
-
   if (existsSync(filePath)) {
     console.warn(filePath, "already exists, skipping");
     return;
+  }
+
+  if (!existsSync(dirname(filePath))) {
+    mkdirSync(dirname(filePath), { recursive: true });
   }
 
   const response = await fetch(url);
