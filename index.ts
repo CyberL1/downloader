@@ -1,11 +1,11 @@
 import {
+  createWriteStream,
   existsSync,
   mkdirSync,
-  readFileSync,
   readdirSync,
+  readFileSync,
   writeFileSync,
 } from "fs";
-import { createWriteStream } from "fs";
 import { dirname, join } from "path";
 import { pipeline } from "stream";
 import { promisify } from "util";
@@ -65,17 +65,17 @@ mkdirSync(clientDir, { recursive: true });
 
 await downloadFile(
   `https://www.guilded.gg/index.html`,
-  join(clientDir, "index.html")
+  join(clientDir, "index.html"),
 );
 
 await downloadFile(
   `https://www.guilded.gg/bundle.js`,
-  join(clientDir, "bundle.js")
+  join(clientDir, "bundle.js"),
 );
 
 await downloadFile(
   `https://www.guilded.gg${BUNDLE_ID}/bundle.js`,
-  join(clientDir, BUNDLE_ID, "bundle.js")
+  join(clientDir, BUNDLE_ID, "bundle.js"),
 );
 
 const scriptsBlock = bundleText.match(/\{return o.p\+""\+\(\{.+?\}/)?.[0];
@@ -86,7 +86,7 @@ for (const match of scriptAssets) {
 
   await downloadFile(
     `https://www.guilded.gg${BUNDLE_ID}/${asset}.js`,
-    join(clientDir, BUNDLE_ID, asset + ".js")
+    join(clientDir, BUNDLE_ID, asset + ".js"),
   );
 }
 
@@ -95,8 +95,8 @@ const allScripts = readdirSync(join(clientDir, BUNDLE_ID));
 const allScriptsContents: string[] = [];
 allScripts.map((s) =>
   allScriptsContents.push(
-    readFileSync(join(clientDir, BUNDLE_ID, s)).toString()
-  )
+    readFileSync(join(clientDir, BUNDLE_ID, s)).toString(),
+  ),
 );
 
 const otherAssets = allScriptsContents
@@ -105,7 +105,7 @@ const otherAssets = allScriptsContents
 
     // Break multi-DPI srcsets into separate entries
     return matches.flatMap((m) =>
-      [...m.matchAll(/"?(\/asset\/[^ ,]+)/g)].map((x) => x[1])
+      [...m.matchAll(/"?(\/asset\/[^ ,]+)/g)].map((x) => x[1]),
     );
   })
   .filter((v, i, a) => a.indexOf(v) === i);
@@ -124,7 +124,7 @@ const fonts = allScriptsContents
 
     // Break multi-DPI srcsets into separate entries
     return matches.flatMap((m) =>
-      [...m.matchAll(/"?(\/fonts\/[^ )]+)/g)].map((x) => x[1])
+      [...m.matchAll(/"?(\/fonts\/[^ )]+)/g)].map((x) => x[1]),
     );
   })
   .filter((v, i, a) => a.indexOf(v) === i);
