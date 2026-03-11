@@ -100,42 +100,29 @@ for (const match of scriptAssets) {
 }
 
 const allScripts = readdirSync(join(clientDir, BUNDLE_ID));
-const allScriptsContents: string[] = [];
+
+const assets = new Set<string>();
+const fonts = new Set<string>();
 
 for (const script of allScripts) {
   const content = readFileSync(join(clientDir, BUNDLE_ID, script), "utf8");
-  allScriptsContents.push(content);
+
+  for (const m of content.matchAll(/\/asset\/[^\s"'?,)]+/g)) {
+    assets.add(m[0]);
+  }
+
+  for (const m of content.matchAll(/\/fonts\/[^\s"'?,)]+/g)) {
+    fonts.add(m[0]);
+  }
 }
 
-const otherAssets = allScriptsContents
-  .flatMap((c) => {
-    const matches = c.match(/"\/asset\/[^"?]+/g) || [];
-
-    // Break multi-DPI srcsets into separate entries
-    return matches.flatMap((m) =>
-      [...m.matchAll(/"?(\/asset\/[^ ,]+)/g)].map((x) => x[1]),
-    );
-  })
-  .filter((v, i, a) => a.indexOf(v) === i);
-
-for (const asset of otherAssets) {
+for (const asset of assets) {
   const assetPath = join(clientDir, asset);
 
   if (!asset.endsWith("/")) {
     await downloadFile(`https://www.guilded.gg${asset}`, assetPath);
   }
 }
-
-const fonts = allScriptsContents
-  .flatMap((c) => {
-    const matches = c.match(/\/fonts\/[^)]+/g) || [];
-
-    // Break multi-DPI srcsets into separate entries
-    return matches.flatMap((m) =>
-      [...m.matchAll(/"?(\/fonts\/[^ )]+)/g)].map((x) => x[1]),
-    );
-  })
-  .filter((v, i, a) => a.indexOf(v) === i);
 
 for (const asset of fonts) {
   const assetPath = join(clientDir, asset);
